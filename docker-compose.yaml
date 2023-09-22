@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  user-management:
+    container_name: user-management
+    ports:
+      - "7650:7650"
+    build:
+      context: .
+      dockerfile: ./cmd/user-management/Dockerfile
+    restart: always
+    volumes:
+      - ./cmd/user-management/config.yaml:/config/config.yaml:ro
+    command:
+      - -config-path
+      - /config/config.yaml
+
+  wallet:
+    container_name: wallet
+    ports:
+      - "7651:7651"
+    build:
+      context: .
+      dockerfile: ./cmd/wallet/Dockerfile
+    restart: always
+    volumes:
+      - ./cmd/wallet/config.yaml:/config/config.yaml:ro
+    command:
+      - -config-path
+      - /config/config.yaml
