@@ -1,0 +1,37 @@
+name: Go
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Compose and GNU Make
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose make
+
+    - name: Build Docker Compose
+      run: |
+        make build
+
+    - name: Run Docker Compose
+      run: |
+        make up
+
+    - name: Check Docker Containers
+      run: |
+        docker ps -a
+      continue-on-error: true
+
+    - name: Clean up Docker Containers
+      run: |
+        make down
