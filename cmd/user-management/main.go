@@ -27,5 +27,5 @@ func main() {
 
 	router := router.NewRouter(services)
 
-	logger.Error(context.Background(), "router error", router.Run())
+	logger.Error(context.Background(), "router error", router.Run(cfg.Addr))
 }

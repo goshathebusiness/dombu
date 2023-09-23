@@ -5,6 +5,8 @@ up:
 	$(MAKE) service-start SERVICE=user-management
 	$(MAKE) service-start SERVICE=wallet
 
+	docker-compose up -d janus-gateway
+
 .PHONY:build
 build:
 	docker-compose build

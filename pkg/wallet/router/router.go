@@ -10,7 +10,7 @@ import (
 func NewRouter(services *services.Services) *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/balance/:id", handlers.GetBalanceByIDHandler(services.WalletSvc))
+	r.GET("/wallet/:id", handlers.GetWalletByIDHandler(services.WalletSvc))
 
 	r.GET("/transaction/:id", handlers.GetTransactionByIDHandler(services.TransactionSvc))
 	r.GET("/transaction", handlers.FetchTransactionByBalanceIDHandler(services.TransactionSvc))

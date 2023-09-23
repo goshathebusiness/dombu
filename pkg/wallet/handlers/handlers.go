@@ -6,7 +6,7 @@ import (
 	"github.com/goshathebusiness/dombu/pkg/wallet/services"
 )
 
-func GetBalanceByIDHandler(svc services.WalletService) gin.HandlerFunc {
+func GetWalletByIDHandler(svc services.WalletService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 	}
