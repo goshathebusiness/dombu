@@ -1,0 +1,21 @@
+{
+  "name" : "wallet",
+  "active" : true,
+  "proxy" : {
+    "preserve_host" : false,
+    "listen_path" : "/wallet*/",
+    "upstreams" : {
+      "balancing": "roundrobin",
+      "targets": [
+        {"target": "http://wallet:7751"}
+      ]
+    },
+    "strip_path" : true,
+    "append_path" : true,
+    "methods" : ["GET"]
+  },
+  "health_check": {
+    "url": "http://wallet:7751",
+    "timeout": 3
+  }
+}

@@ -4,7 +4,7 @@ services:
   user-management:
     container_name: user-management
     ports:
-      - "7650:7650"
+      - "7750:7750"
     build:
       context: .
       dockerfile: ./cmd/user-management/Dockerfile
@@ -18,7 +18,7 @@ services:
   wallet:
     container_name: wallet
     ports:
-      - "7651:7651"
+      - "7751:7751"
     build:
       context: .
       dockerfile: ./cmd/wallet/Dockerfile
@@ -28,3 +28,12 @@ services:
     command:
       - -config-path
       - /config/config.yaml
+
+  janus-gateway:
+    container_name: janus-gateway
+    image: quay.io/hellofresh/janus:3.8.22
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./pkg/janus/apis:/etc/janus/apis
