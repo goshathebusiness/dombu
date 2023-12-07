@@ -13,10 +13,10 @@ func NewRouter(services *services.Services) *gin.Engine {
 	r.GET("/wallets/:id", handlers.GetWalletByIDHandler(services.WalletSvc))
 
 	r.GET("/transactions/:id", handlers.GetTransactionByIDHandler(services.TransactionSvc))
-	r.GET("/transactions", handlers.FetchTransactionByBalanceIDHandler(services.TransactionSvc))
+	r.GET("/transactions", handlers.FetchTransactionsHandler(services.TransactionSvc))
 	r.POST("/transactions", handlers.CreateTransactionHandler(services.TransactionSvc))
 	r.PUT("/transactions", handlers.UpdateTransactionHandler(services.TransactionSvc))
-	r.DELETE("/transactions/:id", handlers.DeleteTransactionByIDHandler(services.TransactionSvc))
+	r.DELETE("/transactions/:id", handlers.DeleteTransactionHandler(services.TransactionSvc))
 
 	return r
 }

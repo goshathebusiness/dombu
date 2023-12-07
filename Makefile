@@ -3,7 +3,7 @@ DIR=${CURDIR}
 .PHONY:up
 up:
 	$(MAKE) postgres-service-start SERVICE=user-management
-	$(MAKE) service-start SERVICE=wallet
+	$(MAKE) postgres-service-start SERVICE=wallet
 
 	docker-compose up -d janus-gateway
 

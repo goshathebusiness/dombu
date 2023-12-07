@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"context"
+
 	"gorm.io/gorm"
 
 	"github.com/goshathebusiness/dombu/pkg/models"
@@ -11,8 +13,8 @@ type RepoManager interface {
 }
 
 type UserRepository interface {
-	GetUserByID(id uint) (*models.User, error)
-	CreateUser(user *models.User) error
-	UpdateUser(user *models.User) error
-	DeleteUser(user *models.User) error
+	GetUserByID(ctx context.Context, id uint) (*models.User, error)
+	CreateUser(ctx context.Context, user *models.User) error
+	UpdateUser(ctx context.Context, user *models.User) error
+	DeleteUser(ctx context.Context, user *models.User) error
 }

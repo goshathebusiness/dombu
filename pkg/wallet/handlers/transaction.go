@@ -10,17 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/goshathebusiness/dombu/pkg/models"
-	"github.com/goshathebusiness/dombu/pkg/user-management/services"
+	"github.com/goshathebusiness/dombu/pkg/wallet/services"
 )
 
-func GetUserByIDHandler(svc *services.UserService) gin.HandlerFunc {
+func GetTransactionByIDHandler(svc *services.TransactionService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
 		}
 
-		user, err := svc.GetUserByID(uint(id))
+		transaction, err := svc.GetTransactionByID(c, uint(id))
 		if err != nil {
 			if errors.Is(err, services.ErrNotFound) {
 				c.JSON(http.StatusNotFound, nil)
@@ -28,68 +28,79 @@ func GetUserByIDHandler(svc *services.UserService) gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, transaction)
 	}
 }
 
-func CreateUserHandler(svc *services.UserService) gin.HandlerFunc {
+func FetchTransactionsHandler(svc *services.TransactionService) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		transactions, err := svc.FetchTransactions(c)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, err)
+		}
+
+		c.JSON(http.StatusOK, transactions)
+	}
+}
+
+func CreateTransactionHandler(svc *services.TransactionService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jsonData, err := io.ReadAll(c.Request.Body)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
 		}
 
-		var user *models.User
-		err = json.Unmarshal(jsonData, user)
+		var transaction *models.Transaction
+		err = json.Unmarshal(jsonData, transaction)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
-		err = svc.CreateUser(user)
+		err = svc.CreateTransaction(c, transaction)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, transaction)
 	}
 }
 
-func UpdateUserHandler(svc *services.UserService) gin.HandlerFunc {
+func UpdateTransactionHandler(svc *services.TransactionService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jsonData, err := io.ReadAll(c.Request.Body)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
 		}
 
-		var user *models.User
-		err = json.Unmarshal(jsonData, user)
+		var transaction *models.Transaction
+		err = json.Unmarshal(jsonData, transaction)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
-		err = svc.UpdateUser(user)
+		err = svc.UpdateTransaction(c, transaction)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusOK, transaction)
 	}
 }
 
-func DeleteUserHandler(svc *services.UserService) gin.HandlerFunc {
+func DeleteTransactionHandler(svc *services.TransactionService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jsonData, err := io.ReadAll(c.Request.Body)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
 		}
 
-		var user *models.User
-		err = json.Unmarshal(jsonData, user)
+		var transaction *models.Transaction
+		err = json.Unmarshal(jsonData, transaction)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 		}
 
-		err = svc.DeleteUser(user)
+		err = svc.DeleteTransaction(c, transaction)
 		if err != nil {
 			if errors.Is(err, services.ErrNotFound) {
 				c.JSON(http.StatusNotFound, nil)
