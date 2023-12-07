@@ -7,9 +7,8 @@ import (
 )
 
 func AutomigrateUserManagement(db *gorm.DB) error {
-	var err error
 
-	err = db.AutoMigrate(&models.User{})
+	err := db.AutoMigrate(&models.User{})
 	if err != nil {
 		return err
 	}
@@ -18,8 +17,7 @@ func AutomigrateUserManagement(db *gorm.DB) error {
 }
 
 func AutomigrateWallet(db *gorm.DB) error {
-	var err error
-	err = db.AutoMigrate(&models.Transaction{})
+	err := db.AutoMigrate(&models.Transaction{})
 	if err != nil {
 		return err
 	}

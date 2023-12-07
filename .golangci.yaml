@@ -1,0 +1,88 @@
+run:
+  timeout: 5m
+
+linters-settings:
+#  errcheck:
+#    exclude-functions:
+#      - (*database/sql.DB).Close
+#      - (*database/sql.Rows).Close
+#      - (*database/sql.Tx).Rollback
+#      - (*github.com/kre-college/lms/pkg/queue/kafka.Producer).ProduceMadeMessage
+#      - (net/http.ResponseWriter).Write
+
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+
+    disabled-checks:
+      - appendAssign
+      - captLocal
+      - commentedOutCode
+      - hugeParam
+      - ifElseChain
+      - importShadow
+      - rangeValCopy
+      - regexpMust
+      - singleCaseSwitch
+      - sloppyReassign
+      - unnamedResult
+
+linters:
+  disable-all: true
+  enable:
+    ## enabled by default
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    ## additional
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - contextcheck
+    - durationcheck
+    - errorlint
+    - exportloopref
+    - gocritic
+    - gofmt
+    - gosimple
+    - ineffassign
+    - misspell
+    - nakedret
+    - nilerr
+    - nilnil
+    - prealloc
+    - predeclared
+    - promlinter
+    - reassign
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - tenv
+    - testableexamples
+    - thelper
+    - tparallel
+    - unconvert
+    - usestdlibvars
+    - wastedassign
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 5
+
+  new: false
+
+output:
+  print-issued-lines: false
+  uniq-by-line: false
+  sort-results: true

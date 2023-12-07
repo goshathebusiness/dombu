@@ -14,24 +14,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Compose and GNU Make
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose make
-
-    - name: Build Docker Compose
-      run: |
-        make build
-
-    - name: Run Docker Compose
-      run: |
-        make up
-
-    - name: Check Docker Containers
-      run: |
-        docker ps -a
-      continue-on-error: true
-
-    - name: Clean up Docker Containers
-      run: |
-        make down
+    - name: Run Go linter
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.55.2

@@ -52,3 +52,7 @@ migrations-down:
 .PHONY:vendor
 vendor:
 	go mod vendor
+
+.PHONY:go-lint
+go-lint:
+	docker run -t --rm -v $(DIR):/app -v ~/.cache/golangci-lint/v1.55.2:/root/.cache -w /app golangci/golangci-lint:v1.55.2 golangci-lint run -v
