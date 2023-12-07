@@ -1,11 +1,20 @@
-FROM golang:1.21.1-alpine3.18 as build
+FROM golang:1.21.1 as builder
+
+ARG ARCH=amd64
+ARG GO111MODULE=on
+
 WORKDIR /code
+
+COPY go.mod go.sum vendor /code/
 COPY . /code
-RUN go build -buildvcs=false -o ./bin/user-management ./cmd/user-management/
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=${ARCH} go build \
+		-mod=vendor \
+		-o $GOPATH/bin/user-management \
+		-gcflags "all=-trimpath=$GOPATH" \
+		-a ./cmd/user-management
 
-#############
-FROM alpine:3.18.3
-WORKDIR /bin
-COPY --from=build /code/bin/ ./
+# Run the container
+FROM alpine:3.15
 
-ENTRYPOINT ["./user-management"]
+COPY --from=builder /go/bin/user-management /bin/user-management
+ENTRYPOINT ["/bin/user-management"]

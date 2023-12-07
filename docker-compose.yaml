@@ -1,6 +1,15 @@
 version: "3"
 
 services:
+  user-management-postgres:
+    container_name: "user-management-postgres"
+    image: postgres:16.0
+    ports:
+      - "6070:5432"
+    environment:
+      POSTGRES_DB: user-management
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 348
   user-management:
     container_name: user-management
     ports:
@@ -14,6 +23,8 @@ services:
     command:
       - -config-path
       - /config/config.yaml
+    depends_on:
+      - user-management-postgres
 
   wallet:
     container_name: wallet

@@ -13,6 +13,7 @@ func NewRouter(services *services.Services) *gin.Engine {
 	r.GET("/user/{id}", handlers.GetUserByIDHandler(services.UserSvc))
 	r.POST("/user", handlers.CreateUserHandler(services.UserSvc))
 	r.PUT("/user", handlers.UpdateUserHandler(services.UserSvc))
-	r.DELETE("/user/{id}", handlers.DeleteUserByIDHandler(services.UserSvc))
+	r.DELETE("/user", handlers.DeleteUserHandler(services.UserSvc))
+
 	return r
 }

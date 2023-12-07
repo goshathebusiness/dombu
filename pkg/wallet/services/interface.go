@@ -1,6 +1,10 @@
 package services
 
-import "github.com/goshathebusiness/dombu/pkg/models"
+import (
+	"context"
+
+	"github.com/goshathebusiness/dombu/pkg/models"
+)
 
 type Services struct {
 	WalletSvc      WalletService
@@ -8,8 +12,12 @@ type Services struct {
 }
 
 type BalanceSvc interface {
-	GetWalletByID(id uint) (*models.Wallet, error)
-	CreateUser(user *models.User) error
-	UpdateUser(user *models.User) error
-	DeleteUserByID(id uint) error
+	GetWalletByID(ctx context.Context, id uint) (*models.Wallet, error)
+}
+
+type TransactionSvc interface {
+	GetTransactionByID(ctx context.Context, id uint) (*models.Transaction, error)
+	CreateTransaction(ctx context.Context, transaction *models.Transaction) error
+	UpdateTransaction(ctx context.Context, transaction *models.Transaction) error
+	DeleteTransactionByID(ctx context.Context, id uint) error
 }
