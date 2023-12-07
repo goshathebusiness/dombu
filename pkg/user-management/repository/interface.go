@@ -1,16 +1,18 @@
-package services
+package repository
 
 import (
 	"context"
 
+	"gorm.io/gorm"
+
 	"github.com/goshathebusiness/dombu/pkg/models"
 )
 
-type Services struct {
-	UserSvc *UserService
+type RepoManager interface {
+	NewUserRepo(db *gorm.DB) UserRepository
 }
 
-type UserSvc interface {
+type UserRepository interface {
 	GetUserByID(ctx context.Context, id uint) (*models.User, error)
 	CreateUser(ctx context.Context, user *models.User) error
 	UpdateUser(ctx context.Context, user *models.User) error
